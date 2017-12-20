@@ -10,17 +10,40 @@ module.exports = testResults => {
     throw new Error("Please add a slack webhookUrl field under jestSlackReporter on your package.json");
   }
 
-  const errText = `<!here> Just a quick heads up, *${testResults.numFailedTests}* tests have failed :(
-  Please take a look. Peace`;
+  const testData = testResults.testResults;
+  
+  let failedTests = [];
 
-  const passingText = `Sweet, all tests have passed`;
+  testData.filter(function(item) {
+      item.testResults.filter(function(test) {
+        return test.status !== 'passed' ? failedTests.push({
+          "color": "#ff0000",
+          "title": test.fullName,
+          "fields": [
+              {
+                  "value": test.status,
+                  "short": false
+              }
+          ],
+        }) : null;
+      });
+  });
+
+  const errText = `
+    *${testResults.numFailedTests}* ${testResults.numFailedTests > 1 ? 'tests have' : 'test has'} failed. Please take a look. 
+  `;
+
+  const passingText = `All *${testResults.numTotalTests}* tests have passed :thumbsup:`;
 
   const text = testResults.numFailedTests > 0 ? errText : passingText;
 
   const options = {
     uri: webhookUrl,
     method: 'POST',
-    json: { text },
+    json: { 
+      'text': text,
+      'attachments': failedTests.length > 0 ? failedTests : [{ "color": "#00ff00", "title": 'No Errors',}]
+    },
     mrkdwn: true,
   };
 

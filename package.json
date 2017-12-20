@@ -1,6 +1,6 @@
 {
-  "name": "jest-slack-reporter",
-  "version": "0.1.1",
+  "name": "jest-slack-reporter-sps",
+  "version": "0.2",
   "description": "Send custom Slack messages as a Jest test results processor.",
   "main": "index.js",
   "scripts": {
@@ -16,12 +16,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vall3y/jest-slack-reporter.git"
+    "url": "git+https://github.com/olitaylor/jest-slack-reporter.git"
   },
-  "homepage": "https://github.com/Vall3y/jest-slack-reporter",
+  "homepage": "https://github.com/olitaylor/jest-slack-reporter",
   "author": {
-    "email": "vall3y@gmail.com",
-    "name": "Guy Zissman"
+    "email": "olivertaylor18@hotmail.com",
+    "name": "Oliver Taylor"
   },
   "license": "MIT",
   "dependencies": {
