@@ -11,7 +11,7 @@ module.exports = testResults => {
   }
 
   const testData = testResults.testResults;
-  
+
   let failedTests = [];
 
   testData.filter(function(item) {
@@ -21,7 +21,7 @@ module.exports = testResults => {
           "title": test.fullName,
           "fields": [
               {
-                  "value": test.status,
+                  "value": 'Failed',
                   "short": false
               }
           ],
