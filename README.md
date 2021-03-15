@@ -1,4 +1,4 @@
-# Jest JSON Reporter
+# Jest Slack Reporter
 
 Jest reporter that notifies a Slack channel via Incoming Webhook integration
 
