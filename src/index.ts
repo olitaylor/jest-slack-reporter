@@ -2,7 +2,7 @@ import * as https from "https";
 import {FailedTest, TestResults} from "./types";
 import {IncomingWebhookSendArguments} from "./slackTypes";
 
-export default (testResults: TestResults, optionalProcessing?: (testResults: TestResults) => IncomingWebhookSendArguments) => {
+export default function (testResults: TestResults, optionalProcessing?: (testResults: TestResults) => IncomingWebhookSendArguments) {
     const {WEBHOOK_URL: webhookUrl} = process.env;
     if (!webhookUrl) {
         throw new Error("Please provide a Slack webhookUrl field as an env variable");
