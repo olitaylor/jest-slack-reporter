@@ -1,10 +1,11 @@
 {
   "name": "jest-slack-reporter-ulms",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Send custom Slack messages as a Jest test results processor.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": ["dist/**/*"],
+  "main": "lib/index.js",
+  "types": "types/index.d.ts",
+  "files": ["lib/**/*", "types/**/*"],
+  "type": "commonjs",
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build"

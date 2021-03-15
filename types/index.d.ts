@@ -1,3 +1,5 @@
+import {IncomingWebhookSendArguments} from "./slackTypes";
+
 export interface MessageAttachment {
     // blocks?: (KnownBlock | Block)[];
     fallback?: string; // either this or text must be defined
@@ -67,3 +69,5 @@ export interface FailedTest{
     title: string;
     fields: Array<FailedTestField>
 }
+
+export { IncomingWebhookSendArguments } from './slackTypes'

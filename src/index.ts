@@ -1,11 +1,10 @@
-import * as https from "https";
-import {FailedTest, TestResults} from "./types";
-import {IncomingWebhookSendArguments} from "./slackTypes";
+import * as https from 'https';
+import {FailedTest, IncomingWebhookSendArguments, TestResults} from "../types";
 
-export default function (testResults: TestResults, optionalProcessing?: (testResults: TestResults) => IncomingWebhookSendArguments) {
+const processor = (testResults: TestResults, optionalProcessing?: (testResults: TestResults) => IncomingWebhookSendArguments) => {
     const {WEBHOOK_URL: webhookUrl} = process.env;
     if (!webhookUrl) {
-        throw new Error("Please provide a Slack webhookUrl field as an env variable");
+        throw new Error("Please provide a Slack webhookUrl field as an env variable — WEBHOOK_URL");
     }
 
     const testData = testResults.testResults;
@@ -41,8 +40,11 @@ export default function (testResults: TestResults, optionalProcessing?: (testRes
         'attachments': failedTests.length > 0 ? failedTests : [{ "color": "#00ff00", "title": 'No Errors',}]
     })
 
+    const prepared = webhookUrl.replace('https://', '').match(/(^.*)(\/services*.*$)/)
+
     const options = {
-        hostname: webhookUrl,
+        hostname: prepared[1],
+        path: prepared[2],
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -50,15 +52,15 @@ export default function (testResults: TestResults, optionalProcessing?: (testRes
         }
     };
 
-    const req = https.request(options, res => {
+    const req = https.request(options, (res: any) => {
         console.log(`statusCode: ${res.statusCode}`)
 
-        res.on('data', d => {
+        res.on('data', (d: any) => {
             process.stdout.write(d)
         })
     })
 
-    req.on('error', error => {
+    req.on('error', (error: any) => {
         console.error(error)
     })
 
@@ -72,3 +74,5 @@ export default function (testResults: TestResults, optionalProcessing?: (testRes
 
     return testResults;
 };
+
+export = processor;
